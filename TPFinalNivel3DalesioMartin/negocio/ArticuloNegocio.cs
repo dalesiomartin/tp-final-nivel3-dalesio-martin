@@ -11,14 +11,25 @@ namespace negocio
 {
     public class ArticuloNegocio
     {
-        public List<Articulo> listar()
+        public List<Articulo> listar(string id = "")
         {
             List<Articulo> lista = new List<Articulo>();
             ConexionDatos datos = new ConexionDatos();
 
             try
             {
-                datos.setearConsulta("select a.Id,Codigo,Nombre,a.Descripcion,a.IdMarca,m.Descripcion Marca,a.IdCategoria,c.Descripcion Categoria,ImagenUrl,Precio  from ARTICULOS a, CATEGORIAS c, MARCAS m where a.IdMarca = m.Id and a.IdCategoria=c.Id");
+
+                //datos.setearConsulta("select a.Id,Codigo,Nombre,a.Descripcion,a.IdMarca,m.Descripcion Marca,a.IdCategoria,c.Descripcion Categoria,ImagenUrl,Precio  from ARTICULOS a, CATEGORIAS c, MARCAS m where a.IdMarca = m.Id and a.IdCategoria=c.Id ");
+
+
+                string query = "Select A.Id, A.Codigo, A.Nombre,A.Descripcion,Precio, C.Descripcion Categoria, M.Descripcion Marca, A.ImagenUrl, A.IdCategoria, A.IdMarca From ARTICULOS A, CATEGORIAS C, MARCAS M Where A.IdCategoria = C.Id and A.IdMarca = M.Id ";
+                if (id != "")
+                {
+                    query += " and A.Id = " + id;
+                }
+                datos.setearConsulta(query);
+
+
 
                 datos.ejecutarLectura();
 
@@ -32,7 +43,7 @@ namespace negocio
 
                     if (!(datos.lectorData["ImagenUrl"] is DBNull))
                         aux.ImagenUrl = (string)datos.lectorData["ImagenUrl"];
-                    
+
                     aux.Precio = Math.Floor((decimal)datos.lectorData["Precio"] * 100) / 100;
 
                     aux.Marca = new Marca();
@@ -57,23 +68,24 @@ namespace negocio
 
                 throw ex;
             }
-            finally { 
+            finally
+            {
                 datos.cerrarConexion();
             }
 
-           
+
 
         }
 
-        public void agregar(Articulo nuevo) 
+        public void agregar(Articulo nuevo)
         {
             ConexionDatos datos = new ConexionDatos();
 
             try
             {
-                datos.setearConsulta(" insert into ARTICULOS (Codigo,Nombre,Descripcion,IdMarca,IdCategoria,ImagenUrl,Precio) values ('"+nuevo.Codigo+"','"+nuevo.Nombre+"','"+nuevo.Descripcion+"', @IdMarca, @IdCategoria, @ImagenUrl, "+nuevo.Precio+")");
+                datos.setearConsulta(" insert into ARTICULOS (Codigo,Nombre,Descripcion,IdMarca,IdCategoria,ImagenUrl,Precio) values ('" + nuevo.Codigo + "','" + nuevo.Nombre + "','" + nuevo.Descripcion + "', @IdMarca, @IdCategoria, @ImagenUrl, " + nuevo.Precio + ")");
 
-                datos.setearParametros("@IdMarca",nuevo.Marca.Id);
+                datos.setearParametros("@IdMarca", nuevo.Marca.Id);
                 datos.setearParametros("@IdCategoria", nuevo.Categoria.Id);
                 datos.setearParametros("@ImagenUrl", nuevo.ImagenUrl);
 
@@ -86,14 +98,14 @@ namespace negocio
 
                 throw ex;
             }
-            finally 
+            finally
             {
                 datos.cerrarConexion();
-            } 
-        
+            }
+
         }
 
-        public void modificar(Articulo artModif) 
+        public void modificar(Articulo artModif)
         {
             ConexionDatos datos = new ConexionDatos();
 
@@ -125,7 +137,8 @@ namespace negocio
 
         }
 
-        public void eliminar(int id) {
+        public void eliminar(int id)
+        {
             try
             {
                 ConexionDatos datos = new ConexionDatos();
@@ -140,10 +153,10 @@ namespace negocio
 
                 throw ex;
             }
-        
+
         }
 
-        public List<Articulo> filtrar(string campo, string criterio, string filtro) 
+        public List<Articulo> filtrar(string campo, string criterio, string filtro)
         {
             List<Articulo> lista = new List<Articulo>();
             ConexionDatos datos = new ConexionDatos();
@@ -161,7 +174,7 @@ namespace negocio
                             break;
                         case "Menor a":
                             consulta += "Precio < " + filtro;
-                            break ;
+                            break;
                         default:
                             consulta += "Precio = " + filtro;
                             break;
@@ -217,7 +230,7 @@ namespace negocio
 
                 }
 
-                datos.setearConsulta( consulta );
+                datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
 
                 while (datos.lectorData.Read())
@@ -231,7 +244,7 @@ namespace negocio
                     if (!(datos.lectorData["ImagenUrl"] is DBNull))
                         aux.ImagenUrl = (string)datos.lectorData["ImagenUrl"];
 
-                    
+
                     aux.Precio = Math.Floor((decimal)datos.lectorData["Precio"] * 100) / 100;
 
                     aux.Marca = new Marca();
@@ -245,9 +258,9 @@ namespace negocio
 
 
                     lista.Add(aux);
-                 }
+                }
 
-                 return lista;
+                return lista;
 
             }
             catch (Exception ex)
@@ -255,20 +268,21 @@ namespace negocio
 
                 throw ex;
             }
-           
+
 
         }
 
-        public List<Articulo> LimpiarFiltros() {
+        public List<Articulo> LimpiarFiltros()
+        {
             List<Articulo> lista = new List<Articulo>();
             ConexionDatos datos = new ConexionDatos();
 
-          
+
             try
             {
                 lista = listar();
             }
-              
+
             catch (Exception ex)
             {
 
@@ -280,7 +294,7 @@ namespace negocio
             }
 
             return lista;
-            
+
         }
 
     }

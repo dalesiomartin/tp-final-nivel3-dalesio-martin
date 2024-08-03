@@ -21,7 +21,7 @@ namespace accesoDatos
         
         public ConexionDatos() 
         {
-            conexion = new SqlConnection("Data Source=DESKTOP-G8FBE6Q\\SQLEXPRESS;Initial Catalog=CATALOGO_DB;Integrated Security=True");
+            conexion = new SqlConnection("Data Source=DESKTOP-G8FBE6Q\\SQLEXPRESS;Initial Catalog=CATALOGO_WEB_DB;Integrated Security=True");
             comando = new SqlCommand();
         }
 
