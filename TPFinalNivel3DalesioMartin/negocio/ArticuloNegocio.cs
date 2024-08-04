@@ -77,6 +77,45 @@ namespace negocio
 
         }
 
+        public Articulo listarConId(int id)
+        {
+            ConexionDatos datos = new ConexionDatos();
+            Articulo aux = new Articulo();
+            aux.Categoria = new Categoria();
+            aux.Marca = new Marca();
+
+            try
+            {
+                datos.setearConsulta("SELECT A.Id, A.Codigo, A.Nombre, A.Descripcion, M.Descripcion as MarcaNombre, C.Descripcion as CategoriaNombre, A.ImagenUrl, A.Precio FROM ARTICULOS A INNER JOIN MARCAS M ON M.Id = A.IdMarca INNER JOIN CATEGORIAS C ON C.Id = A.IdCategoria WHERE A.Id = @id");
+                datos.setearParametros("@id", id);
+
+                datos.ejecutarLectura();
+
+                while (datos.lectorData.Read())
+                {
+                    aux.Id = int.Parse(datos.lectorData["Id"].ToString());
+                    aux.Codigo = datos.lectorData["Codigo"].ToString();
+                    aux.Nombre = datos.lectorData["Nombre"].ToString();
+                    aux.Descripcion = datos.lectorData["Descripcion"].ToString();
+                    aux.ImagenUrl = datos.lectorData["ImagenUrl"].ToString();
+                    aux.Marca.Descripcion = datos.lectorData["MarcaNombre"].ToString();
+                    aux.Categoria.Descripcion = datos.lectorData["CategoriaNombre"].ToString();
+                    aux.Precio = Math.Floor((decimal)datos.lectorData["Precio"] * 100) / 100;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            return aux;
+        }
+
+
         public void agregar(Articulo nuevo)
         {
             ConexionDatos datos = new ConexionDatos();
@@ -191,7 +230,7 @@ namespace negocio
                             consulta += "Codigo like '%" + filtro + "'";
                             break;
                         default: //case "igual a":
-                            consulta += "Codigo '%" + filtro + "%'";
+                            consulta += "Codigo like '%" + filtro + "%'";
                             break;
                     }
 
@@ -208,7 +247,7 @@ namespace negocio
                             consulta += "Nombre like '%" + filtro + "'";
                             break;
                         default: //case "igual a":
-                            consulta += "Nombre '%" + filtro + "%'";
+                            consulta += "Nombre like '%" + filtro + "%'";
                             break;
                     }
 
@@ -218,13 +257,13 @@ namespace negocio
                     switch (criterio)
                     {
                         case "Empieza con":
-                            consulta += "a.Descripcion like '" + filtro + "%' ";
+                            consulta += "m.Descripcion like '" + filtro + "%' ";
                             break;
                         case "Termina con":
-                            consulta += "a.Descripcion like '%" + filtro + "'";
+                            consulta += "m.Descripcion like '%" + filtro + "'";
                             break;
                         default: //case "igual a":
-                            consulta += "a.Descripcion '%" + filtro + "%'";
+                            consulta += "m.Descripcion like '%" + filtro + "%'";
                             break;
                     }
 
@@ -297,5 +336,6 @@ namespace negocio
 
         }
 
+        
     }
 }

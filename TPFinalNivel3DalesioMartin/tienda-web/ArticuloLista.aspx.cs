@@ -11,7 +11,10 @@ namespace tienda_web
 {
     public partial class ProductoLista : System.Web.UI.Page
     {
-        public bool FiltroAvanzado { get; set; }
+        public bool FiltroAvanzado
+        {
+            get { return chkAvanzado.Checked; }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             //if (!SeguridadSession.esAdmin(Session["Usuario"]))
@@ -20,25 +23,28 @@ namespace tienda_web
             //    Response.Redirect("Error.aspx", false);
             //}
 
-            FiltroAvanzado = chkAvanzado.Checked;
+           
 
             if (!IsPostBack)
             {
-                ArticuloNegocio articulo = new ArticuloNegocio();
-                Session.Add("listaArticulo", articulo.listar());
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                Session.Add("listaArticulo", negocio.listar());
                 dgvArticulos.DataSource = Session["listaArticulo"];
                 dgvArticulos.DataBind();
 
             }
-            
-            
-            
+
+            pnlFiltroAvanzado.Visible = FiltroAvanzado;
+
+
         }
 
         protected void dgvArticulos_PageIndexChanging(object sender, GridViewPageEventArgs e)
         {
             dgvArticulos.PageIndex = e.NewPageIndex;
+            dgvArticulos.DataSource = Session["listaArticulo"];
             dgvArticulos.DataBind();
+
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,8 +59,8 @@ namespace tienda_web
         {
             try
             {
-                ArticuloNegocio articulo = new ArticuloNegocio();
-                dgvArticulos.DataSource = articulo.filtrar(
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                dgvArticulos.DataSource = negocio.filtrar(
                     ddlCampo.SelectedItem.ToString(),
                     ddlCriterio.SelectedItem.ToString(),
                     txtFiltroAvanzado.Text);
@@ -70,7 +76,7 @@ namespace tienda_web
       
         protected void chkAvanzado_CheckedChanged(object sender, EventArgs e)
         {
-            FiltroAvanzado = chkAvanzado.Checked;
+            pnlFiltroAvanzado.Visible = chkAvanzado.Checked;
             txtFiltro.Enabled = !FiltroAvanzado;
 
         }
@@ -92,7 +98,7 @@ namespace tienda_web
                 dgvArticulos.DataSource = negocio.LimpiarFiltros();
                 ddlCampo.SelectedIndex = -1;
                 ddlCriterio.SelectedIndex = -1;
-                txtFiltro.Text = string.Empty;
+                txtFiltroAvanzado.Text = string.Empty;
                 dgvArticulos.DataBind();
 
             }
@@ -110,7 +116,7 @@ namespace tienda_web
 
             if (ddlCampo.SelectedItem.ToString() == "Precio")
             {
-                ddlCriterio.Items.Add("Hasta");
+                ddlCriterio.Items.Add("Igual");
                 ddlCriterio.Items.Add("Mayor a");
                 ddlCriterio.Items.Add("Menor a");
             }
