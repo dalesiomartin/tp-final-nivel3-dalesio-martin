@@ -76,7 +76,6 @@
     <Content Include="Login.aspx" />
     <Content Include="MiPerfil.aspx" />
     <Content Include="ArticuloLista.aspx" />
-    <Content Include="Seguridad.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -147,13 +146,6 @@
       <DependentUpon>ArticuloLista.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Seguridad.aspx.cs">
-      <DependentUpon>Seguridad.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Seguridad.aspx.designer.cs">
-      <DependentUpon>Seguridad.aspx</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="MasterPage.Master" />

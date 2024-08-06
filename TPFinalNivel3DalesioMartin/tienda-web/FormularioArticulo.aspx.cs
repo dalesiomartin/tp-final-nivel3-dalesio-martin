@@ -115,6 +115,9 @@ namespace tienda_web
                     negocio.agregar(nuevo);
                 }
 
+                List<Articulo> lista = negocio.listar();
+                Session["listaArticulo"] = lista;
+
                 Response.Redirect("ArticuloLista.aspx", false);
 
             }
