@@ -17,14 +17,7 @@ namespace tienda_web
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!SeguridadSession.esAdmin(Session["Usuario"]))
-            //{
-            //    Session.Add("Error", "Se requieren permisos de admin para ingresar a esta pantalla");
-            //    Response.Redirect("Error.aspx", false);
-            //}
-
-           
-
+        
             if (!IsPostBack)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
@@ -113,18 +106,23 @@ namespace tienda_web
         protected void ddlCampo_SelectedIndexChanged1(object sender, EventArgs e)
         {
             ddlCriterio.Items.Clear();
-
-            if (ddlCampo.SelectedItem.ToString() == "Precio")
+            if (ddlCampo.SelectedItem.ToString() == "Nombre")
             {
-                ddlCriterio.Items.Add("Igual");
-                ddlCriterio.Items.Add("Mayor a");
-                ddlCriterio.Items.Add("Menor a");
+                ddlCriterio.Items.Add("Contiene ");
+                ddlCriterio.Items.Add("Comienza con ");
+                ddlCriterio.Items.Add("Termina con ");
             }
-            else
+            else if (ddlCampo.SelectedItem.ToString() == "Marca")
             {
-                ddlCriterio.Items.Add("Contiene");
-                ddlCriterio.Items.Add("Comienza con");
-                ddlCriterio.Items.Add("Termina con");
+                ddlCriterio.Items.Add("Contiene ");
+                ddlCriterio.Items.Add("Comienza con ");
+                ddlCriterio.Items.Add("Termina con ");
+            }
+            else if (ddlCampo.SelectedItem.ToString() == "Precio")
+            {
+                ddlCriterio.Items.Add("Igual a ");
+                ddlCriterio.Items.Add("Mayor a ");
+                ddlCriterio.Items.Add("Menor a ");
             }
         }
 
