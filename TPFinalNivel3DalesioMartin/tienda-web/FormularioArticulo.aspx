@@ -17,18 +17,18 @@
             <div class="mb-3">
                 <label for="txtCodArticulo" class="form-label">* Codigo de Articulo: </label>
                 <asp:TextBox runat="server" ID="txtCodArticulo" CssClass="form-control" />
-                <%-- <asp:RequiredFieldValidator ErrorMessage="El Codigo es requerido." ControlToValidate="txtCodArticulo" ForeColor="DarkRed" runat="server" />--%>
+                <asp:RequiredFieldValidator ErrorMessage="El Codigo es requerido." ControlToValidate="txtCodArticulo" ForeColor="DarkRed" runat="server" />
             </div>
             <div class="mb-3">
                 <label for="txtNombre" class="form-label">* Nombre: </label>
                 <asp:TextBox runat="server" ID="txtNombre" CssClass="form-control" />
-                <%-- <asp:RequiredFieldValidator ErrorMessage="El nombre es requerido." ControlToValidate="txtNombre" ForeColor="DarkRed" runat="server" />--%>
+                <asp:RequiredFieldValidator ErrorMessage="El nombre es requerido." ControlToValidate="txtNombre" ForeColor="DarkRed" runat="server" />
             </div>
             <div class="mb-3">
                 <label for="txtPrecio" class="form-label">* Precio: </label>
                 <asp:TextBox runat="server" ID="txtPrecio" CssClass="form-control" />
-                <%--                <asp:RequiredFieldValidator ErrorMessage="El Precio es requerido." ControlToValidate="txtPrecio" ForeColor="DarkRed" runat="server" />
-                <asp:RangeValidator ErrorMessage="Ingresar un formato valido para precio" ControlToValidate="txtPrecio" Type="Double" MinimumValue="0" MaximumValue="70000000" runat="server" />--%>
+                <asp:RequiredFieldValidator ErrorMessage="El Precio es requerido." ControlToValidate="txtPrecio" ForeColor="DarkRed" runat="server" />
+                <asp:RangeValidator ErrorMessage="Ingresar un formato valido para precio" ControlToValidate="txtPrecio" Type="Double" MinimumValue="0" MaximumValue="70000000" runat="server" />
             </div>
 
             <div class="mb-3">
@@ -78,10 +78,10 @@
 
                     <%if (ConfirmaEliminacion)
                         { %>
-                         <div class="mb-3">
-                             <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
-                             <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-outline-danger" runat="server" />
-                         </div>
+                    <div class="mb-3">
+                        <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
+                        <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-outline-danger" runat="server" />
+                    </div>
 
                     <%} %>
                 </ContentTemplate>

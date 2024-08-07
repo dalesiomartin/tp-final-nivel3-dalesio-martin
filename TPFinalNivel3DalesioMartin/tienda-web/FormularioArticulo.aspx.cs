@@ -58,7 +58,7 @@ namespace tienda_web
                     txtId.Text = id;
                     txtCodArticulo.Text = seleccionado.Codigo;
                     txtNombre.Text = seleccionado.Nombre;
-                    txtPrecio.Text = seleccionado.Precio.ToString();
+                    txtPrecio.Text = seleccionado.Precio.ToString("c");
                     txtDescripcion.Text = seleccionado.Descripcion;
                     txtImagenUrl.Text = seleccionado.ImagenUrl;
 
@@ -82,9 +82,9 @@ namespace tienda_web
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
-            //Page.Validate();
-            //if (!Page.IsValid)
-            //    return;
+            Page.Validate();
+            if (!Page.IsValid)
+                return;
             try
             {
                 if (string.IsNullOrEmpty(txtCodArticulo.Text) || string.IsNullOrEmpty(txtNombre.Text) || string.IsNullOrEmpty(txtPrecio.Text))

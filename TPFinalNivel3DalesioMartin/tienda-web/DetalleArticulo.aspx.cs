@@ -28,7 +28,7 @@ namespace tienda_web
                     txtDescripcion.Text = aux.Descripcion;
                     txtMarca.Text = aux.Marca != null ? aux.Marca.ToString() : string.Empty;
                     txtCategoria.Text = aux.Categoria != null ? aux.Categoria.ToString() : string.Empty;
-                    txtPrecio.Text = aux.Precio.ToString();
+                    txtPrecio.Text = aux.Precio.ToString("c");
                     txtImagen.ImageUrl = aux.ImagenUrl;
                 }
             }
