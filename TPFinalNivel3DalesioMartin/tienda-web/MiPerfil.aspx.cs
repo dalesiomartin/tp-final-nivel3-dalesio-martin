@@ -28,7 +28,7 @@ namespace tienda_web
                 }
                 else
                 {
-                    Response.Redirect("LoginPagina.aspx", false);
+                    Response.Redirect("Login.aspx", false);
                 }
             }
         }

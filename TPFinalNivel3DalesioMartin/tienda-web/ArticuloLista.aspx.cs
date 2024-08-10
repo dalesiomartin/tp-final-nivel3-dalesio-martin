@@ -17,6 +17,11 @@ namespace tienda_web
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Seguridad.EsAdmin(Session["trainee"]))
+            {
+                Session.Add("error", "Se requiere permisos de admin para acceder a esta pantalla");
+                Response.Redirect("Error.aspx");
+            }
         
             if (!IsPostBack)
             {

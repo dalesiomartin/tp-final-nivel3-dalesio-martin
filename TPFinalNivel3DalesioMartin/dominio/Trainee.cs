@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
+   
     public class Trainee
     {
         public int Id { get; set; }
@@ -15,6 +16,8 @@ namespace dominio
         public string Apellido { get; set; }
         public string ImagenPerfil { get; set; }
         public bool Admin { get; set; }
+
+      
 
     }
 }

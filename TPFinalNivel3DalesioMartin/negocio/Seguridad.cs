@@ -14,7 +14,7 @@ namespace negocio
             Trainee trainee = user != null ? (Trainee)user : null;
 
             if (trainee != null && trainee.Id != 0)
-                return true;   //Si hay un user "vivo" y tiene datos en la DB retorno true
+                return true;   
             else
                 return false;
         }
@@ -22,7 +22,7 @@ namespace negocio
         public static bool EsAdmin(object user)
         {
             Trainee trainee = user != null ? (Trainee)user : null;
-            return trainee != null ? trainee.Admin : false;  //al loguearme me trae de db si es admin o no (booleano)
+            return trainee != null ? trainee.Admin : false;  //al loguearme me trae si es admin o no 
         }
     }
 }

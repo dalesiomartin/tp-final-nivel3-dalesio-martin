@@ -28,8 +28,10 @@ namespace tienda_web
         {
             Trainee trainee = new Trainee();
             TraineeNegocio negocio = new TraineeNegocio();
+
             try
             {
+                
                 trainee.Email = txtUser.Text;
                 trainee.Pass = txtPass.Text;
 

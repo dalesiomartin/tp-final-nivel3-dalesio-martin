@@ -31,6 +31,8 @@ namespace negocio
             }
         }
 
+      
+
         public int InsertarNuevo(Trainee nuevo)
         {
             ConexionDatos datos = new ConexionDatos();
@@ -74,7 +76,7 @@ namespace negocio
                         trainee.ImagenPerfil = (string)datos.lectorData["urlImagenPerfil"];
 
                     return true;
-                }
+                }       
                 return false;
             }
             catch (Exception ex)

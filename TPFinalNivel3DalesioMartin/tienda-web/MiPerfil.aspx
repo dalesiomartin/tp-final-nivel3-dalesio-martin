@@ -5,7 +5,7 @@
 
      <h1>Mi perfil</h1>
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-4">
             <div class="mb-3">
                 <asp:Label Text="Email" class="col-sm-2 col-form-label fw-bold" runat="server" />
                 <asp:TextBox CssClass="form-control-plaintext" runat="server" ID="txtEmail"  ReadOnly="true"></asp:TextBox>
@@ -20,7 +20,7 @@
                 <asp:TextBox CssClass="form-control" REQUIRED ClientIDMode="Static" runat="server" ID="txtApellido"></asp:TextBox>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
             <div class="mb-3">
                 <label class="form-label  fw-bold"">Imagen Perfil</label>
                 <input type="file" ID="txtImagen" runat="server" class="form-control" />
@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="row">
-         <div class="col-4">
+         <div class="col-md-4">
              <asp:Button Text="Guardar" CssClass="btn btn-outline-secondary" ID="btnGuardar" runat="server" OnClientClick="return validar()" OnClick="btnGuardar_Click"/>
              <a href="Default.aspx" Class=" btn btn-dark">Regresar</a>
          </div>
