@@ -73,7 +73,7 @@ namespace negocio
                     if (!(datos.lectorData["apellido"] is DBNull))
                         trainee.Apellido = (string)datos.lectorData["apellido"];
                     if (!(datos.lectorData["urlImagenPerfil"] is DBNull))
-                        trainee.ImagenPerfil = (string)datos.lectorData["urlImagenPerfil"];
+                        trainee.UrlImagenPerfil = (string)datos.lectorData["urlImagenPerfil"];
 
                     return true;
                 }       
@@ -95,8 +95,8 @@ namespace negocio
             ConexionDatos datos = new ConexionDatos();
             try
             {
-                datos.setearConsulta("UPDATE USERS SET nombre = @nombre, apellido = @apellido, urlImagenPerfil = @urlImagenPerfil WHERE id = @id");
-                datos.setearParametros("@urlImagenPerfil", (object)user.ImagenPerfil ?? DBNull.Value);
+                datos.setearConsulta("UPDATE USERS SET nombre = @nombre, apellido = @apellido, urlImagenPerfil = @imagen WHERE id = @id");
+                datos.setearParametros("@imagen", (object)user.UrlImagenPerfil ?? DBNull.Value);
                 datos.setearParametros("@nombre", user.Nombre);
                 datos.setearParametros("@apellido", user.Apellido);
                 datos.setearParametros("@id", user.Id);

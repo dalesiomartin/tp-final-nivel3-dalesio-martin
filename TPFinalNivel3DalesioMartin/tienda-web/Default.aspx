@@ -11,10 +11,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h1>Pagina HOME</h1>
-
-    <h1>Bienvenido a tu catalogo de tecnologia</h1>
-    <p>Estos son todos nuestros productos en stock</p>
+       <h1 class="mb-3" style=" background-image: url('./Imagenes/fondo/fondo4.jpg');  background-size: cover;  background-position: center; 
+   color: white;  padding: 12px 20px;  border-radius: 8px;  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);  font-family: 'Roboto', sans-serif; 
+   letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Tienda Tech Web </h1>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
 

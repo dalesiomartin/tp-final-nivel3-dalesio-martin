@@ -17,7 +17,12 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h2>Detalle del Artículo</h2>
+  
+
+     <h1 class="mb-3" style=" background-image: url('./Imagenes/fondo0.jpg');  background-size: cover;  background-position: center; 
+color: white;  padding: 12px 20px;  border-radius: 8px;  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);  font-family: 'Roboto', sans-serif; 
+letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Detalle del Artículo </h1>
+
     <div class="row">
         <%-- --columna izq----%>
         <div class="col-6">

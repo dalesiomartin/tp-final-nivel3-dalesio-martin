@@ -15,20 +15,23 @@ namespace tienda_web
         {
             if (!(Page is Login || Page is Default || Page is Registro || Page is Error))
             {
-                if (!Seguridad.SesionActiva(Session["trainee"]))
-                    Response.Redirect("Login.aspx", false);
-                    
-                if (Seguridad.SesionActiva(Session["trainee"]))
+              
+                imgAvatar.ImageUrl = "https://simg.nicepng.com/png/small/202-2022264_usuario-annimo-usuario-annimo-user-icon-png-transparent.png";
+               
+                if (!(Page is Login || Page is Registro || Page is Default || Page is Error))
                 {
-                    Trainee user = new Trainee();
-                    user = (Trainee)Session["trainee"];
-                    imgAvatar.ImageUrl = "~/Imagenes/" + user.ImagenPerfil;
-                    lbUser.Text = user.Email;
+                    if (!Seguridad.SesionActiva(Session["trainee"]))
+                        Response.Redirect("Login.aspx", false);
+                    else
+                    {
+                        Trainee user = (Trainee)Session["trainee"];
+                        lbUser.Text = user.Email;
+                        if (!string.IsNullOrEmpty(user.UrlImagenPerfil))
+                            imgAvatar.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil;
+                    }
                 }
-                else
-                {
-                    imgAvatar.ImageUrl = "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
-                }
+
+
 
             }
         }

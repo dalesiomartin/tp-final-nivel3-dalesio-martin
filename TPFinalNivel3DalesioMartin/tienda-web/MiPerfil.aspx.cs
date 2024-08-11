@@ -13,23 +13,28 @@ namespace tienda_web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            try
             {
-
-                if (Seguridad.SesionActiva(Session["trainee"]))
+                if (!IsPostBack)
                 {
-                    Trainee user = (Trainee)Session["trainee"];
-                    txtEmail.Text = user.Email;
-                    txtEmail.ReadOnly = true;
-                    txtNombre.Text = user.Nombre;
-                    txtApellido.Text = user.Apellido;
-                    imgAvatar.ImageUrl = "~/Imagenes/" + user.ImagenPerfil;
+                    if (Seguridad.SesionActiva(Session["trainee"]))
+                    {
+                        Trainee user = (Trainee)Session["trainee"];
+                        txtEmail.Text = user.Email;
+                        txtEmail.ReadOnly = true;
+                        txtNombre.Text = user.Nombre;
+                        txtApellido.Text = user.Apellido;
+                        if (!string.IsNullOrEmpty(user.UrlImagenPerfil))
+                            imgAvatar.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil;
+                            
 
+                    }
                 }
-                else
-                {
-                    Response.Redirect("Login.aspx", false);
-                }
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.ToString());
             }
         }
 
@@ -46,9 +51,9 @@ namespace tienda_web
 
                 if (txtImagen.PostedFile.FileName != "") //escribir imagen solo si se cargo algo, sino sigue como estaba la db (con imagen o sin nada, si no hacia esta validacion me cargaba cualquier cosa, me cambiaba lo que ya tenia)
                 {
-                    string ruta = Server.MapPath("./Imagenes/"); //capturo la ruta donde guardare las fotos
-                    txtImagen.PostedFile.SaveAs(ruta + "perfil-" + user.Id + ".jpg"); //en la ruta guardamos la imagen seleccionada con el nombre
-                    user.ImagenPerfil = "perfil-" + user.Id + ".jpg";
+                    string ruta = Server.MapPath("./Imagenes/perfil/"); //capturo la ruta donde guardare las imagenes
+                    txtImagen.PostedFile.SaveAs(ruta + "perfil-" + user.Id + ".jpg"); //en la ruta guardamos la imagen seleccionada con el id
+                    user.UrlImagenPerfil = "perfil-" + user.Id + ".jpg";
                 }
 
                 user.Nombre = txtNombre.Text;
@@ -65,7 +70,7 @@ namespace tienda_web
                     if (img != null)
                     {
                         // Añadir un parámetro aleatorio para evitar caché
-                        img.ImageUrl = "~/Imagenes/" + user.ImagenPerfil;
+                        img.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil;
                     }
                     else
                     {
@@ -73,7 +78,7 @@ namespace tienda_web
                     }
                 }
 
-                Response.Redirect("Default.aspx", false);
+               
             }
             catch (Exception ex)
             {
