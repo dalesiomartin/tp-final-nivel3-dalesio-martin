@@ -40,6 +40,8 @@ namespace tienda_web
                     ddlCategoria.DataTextField = "Descripcion";
                     ddlCategoria.DataValueField = "Id";
                     ddlCategoria.DataBind();
+
+                    btnEliminar.Visible = false; //no lo necesito si estoy dando de alta un articulo
                 }
 
 
@@ -47,6 +49,8 @@ namespace tienda_web
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
+                    
+
                     ArticuloNegocio negocio = new ArticuloNegocio();
 
                     Articulo seleccionado = (negocio.listar(id))[0];
@@ -66,6 +70,7 @@ namespace tienda_web
                     ddlCategoria.SelectedValue = seleccionado.Categoria.Id.ToString();
                     txtImagenUrl_TextChanged(sender, e);
 
+                    btnEliminar.Visible = true;
 
                     //configurar acciones
                     //if (!seleccionado.Activo)

@@ -48,6 +48,7 @@ letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Lista de Ar
                                     <asp:ListItem Text="Precio" />
                                     <asp:ListItem Text="Nombre" />
                                     <asp:ListItem Text="Marca" />
+                                    <asp:ListItem Text="Categoria" />
                                 </asp:DropDownList>
                             </div>
                         </div>
@@ -55,7 +56,7 @@ letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Lista de Ar
                         <div class="col-3">
                             <div class="mb-3">
                                 <asp:Label Text="Criterio" runat="server" />
-                                <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlCriterio_SelectedIndexChanged"></asp:DropDownList>
                             </div>
                         </div>
 
@@ -95,7 +96,7 @@ letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Lista de Ar
                         <asp:BoundField HeaderText="Categoria" DataField="Categoria.Descripcion" />
                         <asp:BoundField HeaderText="Precio" DataField="Precio" DataFormatString="{0:C}" HtmlEncode="False" />
                         <asp:BoundField HeaderText="Descripcion" DataField="Descripcion" />
-                        <asp:CommandField HeaderText="Seleccionar" ShowSelectButton="true" SelectText="✍️ Modificar" />
+                        <asp:CommandField HeaderText="Accion" ShowSelectButton="true" SelectText="✍️" />
 
                     </Columns>
 

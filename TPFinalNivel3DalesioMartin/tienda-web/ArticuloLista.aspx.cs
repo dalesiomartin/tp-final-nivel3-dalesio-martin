@@ -22,7 +22,7 @@ namespace tienda_web
                 Session.Add("error", "Se requiere permisos de admin para acceder a esta pantalla");
                 Response.Redirect("Error.aspx");
             }
-        
+
             if (!IsPostBack)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
@@ -51,7 +51,7 @@ namespace tienda_web
             Response.Redirect("FormularioArticulo.aspx?id=" + id);
         }
 
-       
+
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -70,8 +70,8 @@ namespace tienda_web
                 throw;
             }
         }
-        
-      
+
+
         protected void chkAvanzado_CheckedChanged(object sender, EventArgs e)
         {
             pnlFiltroAvanzado.Visible = chkAvanzado.Checked;
@@ -93,11 +93,26 @@ namespace tienda_web
             try
             {
 
-                dgvArticulos.DataSource = negocio.LimpiarFiltros();
-                ddlCampo.SelectedIndex = -1;
-                ddlCriterio.SelectedIndex = -1;
-                txtFiltroAvanzado.Text = string.Empty;
-                dgvArticulos.DataBind();
+                //dgvArticulos.DataSource = negocio.LimpiarFiltros();
+                //ddlCampo.SelectedIndex = -1;
+                //ddlCriterio.SelectedIndex = -1;
+                //txtFiltroAvanzado.Text = string.Empty;
+                //dgvArticulos.DataBind();
+
+                //SEGUIR TRABAJANDOLO
+                // Limpiar la selección del campo
+                //ddlCampo.ClearSelection();
+
+                //// Limpiar los criterios del DropDownList
+                //ddlCriterio.Items.Clear();
+
+                //// Limpiar el texto del filtro avanzado
+                //txtFiltroAvanzado.Text = string.Empty;
+
+                //// Opcional: Deshabilitar el campo de texto del filtro avanzado
+                //txtFiltroAvanzado.Enabled = false;
+
+
 
             }
             catch (Exception ex)
@@ -110,34 +125,75 @@ namespace tienda_web
 
         protected void ddlCampo_SelectedIndexChanged1(object sender, EventArgs e)
         {
+            CategoriaNegocio cateNeg = new CategoriaNegocio();
+            MarcaNegocio marcaNeg = new MarcaNegocio();
+
+
+            //Session["listaMarca"] = marcaNeg.listar();
+
+            List<Marca> listaMarcas = marcaNeg.listar();
+            List<Categoria> listaCategorias = cateNeg.listar();
+
+
+
             ddlCriterio.Items.Clear();
             if (ddlCampo.SelectedItem.ToString() == "Nombre")
             {
-                ddlCriterio.Items.Add("Contiene ");
-                ddlCriterio.Items.Add("Comienza con ");
-                ddlCriterio.Items.Add("Termina con ");
+                ddlCriterio.Items.Add("Contiene");
+                ddlCriterio.Items.Add("Empieza con");
+                ddlCriterio.Items.Add("Termina con");
+                txtFiltroAvanzado.Enabled = true;
             }
             else if (ddlCampo.SelectedItem.ToString() == "Marca")
             {
-                ddlCriterio.Items.Add("Contiene ");
-                ddlCriterio.Items.Add("Comienza con ");
-                ddlCriterio.Items.Add("Termina con ");
+                ddlCriterio.DataSource = listaMarcas;
+
+                // Especificar el campo que se mostrará en el DropDownList
+                ddlCriterio.DataTextField = "Descripcion"; // Mostrar la propiedad "Descripcion"
+
+                // Especificar el campo que se usará como valor
+                ddlCriterio.DataValueField = "Id"; // Usar la propiedad "Id" como valor
+
+                // Enlazar los datos al control para que se reflejen en la interfaz de usuario
+                ddlCriterio.DataBind();
+                txtFiltroAvanzado.Enabled = false;
+
+
+            }
+            else if (ddlCampo.SelectedItem.ToString() == "Categoria")
+            {
+                ddlCriterio.DataSource = listaCategorias;
+                ddlCriterio.DataTextField = "Descripcion";
+                ddlCriterio.DataValueField = "Id";
+                ddlCriterio.DataBind();
+
+                txtFiltroAvanzado.DataBind();
+                txtFiltroAvanzado.Enabled = false;
+
             }
             else if (ddlCampo.SelectedItem.ToString() == "Precio")
             {
-                ddlCriterio.Items.Add("Igual a ");
-                ddlCriterio.Items.Add("Mayor a ");
-                ddlCriterio.Items.Add("Menor a ");
+                ddlCriterio.Items.Add("Igual a");
+                ddlCriterio.Items.Add("Mayor a");
+                ddlCriterio.Items.Add("Menor a");
+                txtFiltroAvanzado.Enabled = true;
             }
         }
 
-
+        protected void ddlCriterio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Asignar el Id seleccionado en el DropDownList al campo de texto
+            if (ddlCriterio.SelectedValue != null)
+            {
+                txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
+            }
+        }
     }
-
-
-   
-
-       
-
-        
 }
+
+
+
+
+
+
+

@@ -34,16 +34,16 @@
             <div class="mb-3">
                 <label for="ddlMarca" class="form-label">* Marca: </label>
                 <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-control" />
-                <%--   <asp:RequiredFieldValidator ErrorMessage="La Marca es requerida." ControlToValidate="ddlMarca" ForeColor="DarkRed" runat="server" />--%>
+                   <asp:RequiredFieldValidator ErrorMessage="La Marca es requerida." ControlToValidate="ddlMarca" ForeColor="DarkRed" runat="server" />
             </div>
             <div class="mb-3">
                 <label for="ddlCategoria" class="form-label">* Categoria: </label>
                 <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-control" />
-                <%--  <asp:RequiredFieldValidator ErrorMessage="La Categoria es requerido." ControlToValidate="ddlCategoria" ForeColor="DarkRed" runat="server" />--%>
+                  <asp:RequiredFieldValidator ErrorMessage="La Categoria es requerido." ControlToValidate="ddlCategoria" ForeColor="DarkRed" runat="server" />
             </div>
 
             <div class="mb-3">
-                <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" runat="server" />
+                <asp:Button Text="Guardar" ID="btnAceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" runat="server" />
                 <a href="ArticuloLista.aspx">Cancelar</a>
             </div>
         </div>
@@ -69,23 +69,31 @@
     <%-- --------------otra Fila-------------------%>
     <div class="row">
         <div class="col-6">
+         
             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                 <ContentTemplate>
+
+
+                  
 
                     <div class="mb-3">
                         <asp:Button Text="Eliminar" ID="btnEliminar" OnClick="btnEliminar_Click" CssClass="btn btn-danger" runat="server" />
                     </div>
 
-                    <%if (ConfirmaEliminacion)
-                        { %>
-                    <div class="mb-3">
-                        <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
-                        <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-outline-danger" runat="server" />
-                    </div>
+                             <%if (ConfirmaEliminacion)
+                             { %>
+                            <div class="mb-3">
+                                 <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
+                                    <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-outline-danger" runat="server" />
+                             </div>
 
-                    <%} %>
+                             <%} %>
+
+                   
                 </ContentTemplate>
             </asp:UpdatePanel>
+           
+
         </div>
     </div>
 

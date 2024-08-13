@@ -219,22 +219,7 @@ namespace negocio
                             break;
                     }
                 }
-                else if (campo == "Código de Artículo")
-                {
-                    switch (criterio)
-                    {
-                        case "Empieza con":
-                            consulta += "Codigo like '" + filtro + "%'";
-                            break;
-                        case "Termina con":
-                            consulta += "Codigo like '%" + filtro + "'";
-                            break;
-                        default: //case "igual a":
-                            consulta += "Codigo like '%" + filtro + "%'";
-                            break;
-                    }
-
-                }
+              
                 else if (campo == "Nombre")
                 {
 
@@ -252,21 +237,15 @@ namespace negocio
                     }
 
                 }
-                else
+                else if(campo == "Marca")
                 {
-                    switch (criterio)
-                    {
-                        case "Empieza con":
-                            consulta += "m.Descripcion like '" + filtro + "%' ";
-                            break;
-                        case "Termina con":
-                            consulta += "m.Descripcion like '%" + filtro + "'";
-                            break;
-                        default: //case "igual a":
-                            consulta += "m.Descripcion like '%" + filtro + "%'";
-                            break;
-                    }
+                    consulta += "a.IdMarca = " + filtro;
 
+                }
+                else if (campo == "Categoria")
+                {
+                    
+                    consulta += "a.IdCategoria = " + filtro;
                 }
 
                 datos.setearConsulta(consulta);
@@ -319,6 +298,7 @@ namespace negocio
 
             try
             {
+
                 lista = listar();
             }
 
@@ -335,7 +315,7 @@ namespace negocio
             return lista;
 
         }
+       
 
-        
     }
 }
