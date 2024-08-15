@@ -16,6 +16,7 @@ namespace tienda_web
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             ListaArticulo = negocio.listar();
+            
             if (!IsPostBack)
             {
                 repRepetidor.DataSource = ListaArticulo;

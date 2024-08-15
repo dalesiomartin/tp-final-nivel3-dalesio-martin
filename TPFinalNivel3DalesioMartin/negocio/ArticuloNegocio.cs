@@ -290,31 +290,31 @@ namespace negocio
 
         }
 
-        public List<Articulo> LimpiarFiltros()
-        {
-            List<Articulo> lista = new List<Articulo>();
-            ConexionDatos datos = new ConexionDatos();
+        //public List<Articulo> LimpiarFiltros()
+        //{
+        //    List<Articulo> lista = new List<Articulo>();
+        //    ConexionDatos datos = new ConexionDatos();
 
 
-            try
-            {
+        //    try
+        //    {
 
-                lista = listar();
-            }
+        //        lista = listar();
+        //    }
 
-            catch (Exception ex)
-            {
+        //    catch (Exception ex)
+        //    {
 
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
+        //        throw ex;
+        //    }
+        //    finally
+        //    {
+        //        datos.cerrarConexion();
+        //    }
 
-            return lista;
+        //    return lista;
 
-        }
+        //}
        
 
     }

@@ -9,9 +9,7 @@
     <div class="container">
 
 
-        <h1 class="mb-3" style=" background-image: url('./Imagenes/fondo/fondo4.jpg');  background-size: cover;  background-position: center; 
-color: white;  padding: 12px 20px;  border-radius: 8px;  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);  font-family: 'Roboto', sans-serif; 
-letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Lista de Articulos </h1>
+        <h1 class="mb-3" style="background-image: url('./Imagenes/fondo/fondo4.jpg'); background-size: cover; background-position: center; color: white; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); font-family: 'Roboto', sans-serif; letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">Lista de Articulos </h1>
 
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
@@ -40,23 +38,30 @@ letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Lista de Ar
                 <asp:Panel runat="server" ID="pnlFiltroAvanzado" Visible="false">
 
                     <div class="row">
-                        
+
                         <div class="col-3">
                             <div class="mb-3">
                                 <asp:Label Text="Campo" ID="lbCampo" runat="server" />
                                 <asp:DropDownList runat="server" AutoPostBack="true" CssClass="form-control" ID="ddlCampo" OnSelectedIndexChanged="ddlCampo_SelectedIndexChanged1">
+                                    <asp:ListItem Text="-- Seleccione una opción --" Value="" />
                                     <asp:ListItem Text="Precio" />
                                     <asp:ListItem Text="Nombre" />
                                     <asp:ListItem Text="Marca" />
                                     <asp:ListItem Text="Categoria" />
                                 </asp:DropDownList>
+                                <asp:RequiredFieldValidator ErrorMessage="Debe seleccionar una opción" ControlToValidate="ddlCampo" runat="server"
+                                    ID="validaCampo" InitialValue="" ForeColor="DarkRed" />
                             </div>
                         </div>
 
                         <div class="col-3">
                             <div class="mb-3">
                                 <asp:Label Text="Criterio" runat="server" />
-                                <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlCriterio_SelectedIndexChanged"></asp:DropDownList>
+                                <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlCriterio_SelectedIndexChanged">
+                                    <asp:ListItem Text="-- Seleccione una opción --" Value="" />
+                                </asp:DropDownList>
+                                <asp:RequiredFieldValidator ErrorMessage="Debe seleccionar una opción" ID="validaCriterio" ControlToValidate="ddlCriterio" runat="server"
+                                    InitialValue="" ForeColor="DarkRed" />
                             </div>
                         </div>
 
@@ -79,7 +84,7 @@ letter-spacing: 1px;  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"> Lista de Ar
                             </div>
                         </div>
                     </div>
-                 
+
                     <br />
 
                 </asp:Panel>

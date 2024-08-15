@@ -78,6 +78,15 @@ namespace tienda_web
         protected global::System.Web.UI.WebControls.DropDownList ddlCampo;
 
         /// <summary>
+        /// Control validaCampo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validaCampo;
+
+        /// <summary>
         /// Control ddlCriterio.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace tienda_web
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCriterio;
+
+        /// <summary>
+        /// Control validaCriterio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator validaCriterio;
 
         /// <summary>
         /// Control txtFiltroAvanzado.

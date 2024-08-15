@@ -1,5 +1,30 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="MiPerfil.aspx.cs" Inherits="tienda_web.MiPerfil" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <style>
+        .validacion{
+            color: red;
+            font-size: 10px;
+        }
+    </style>
+    <script>
+        function validar() {
+
+            //capturar el control. 
+            const txtApellido = document.getElementById("txtApellido");
+            const txtNombre = document.getElementById("txtNombre");
+            if (txtApellido.value == "") {
+                txtApellido.classList.add("is-invalid");
+                txtApellido.classList.remove("is-valid");
+                txtNombre.classList.add("is-valid");
+                return false;
+            }
+            txtApellido.classList.remove("is-invalid");
+            txtApellido.classList.add("is-valid");
+            return true;
+        }
+    </script>
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -15,15 +40,17 @@
             <div class="mb-3">
                 <asp:Label Text="Email" class="col-sm-2 col-form-label fw-bold" runat="server" />
                 <asp:TextBox CssClass="form-control-plaintext" runat="server" ID="txtEmail"  ReadOnly="true"></asp:TextBox>
-    
+                
             </div>
             <div class="mb-3">
                 <asp:Label Text="Nombre" class="col-sm-2 col-form-label fw-bold" runat="server" />
-                <asp:TextBox CssClass="form-control" REQUIRED ClientIDMode="Static" runat="server" ID="txtNombre"></asp:TextBox>
+                <asp:TextBox CssClass="form-control" ClientIDMode="Static" runat="server" ID="txtNombre"></asp:TextBox>
+                <asp:RequiredFieldValidator CssClass="validacion" ErrorMessage="El nombre es requerido" ControlToValidate="txtNombre" runat="server" />
             </div>
             <div class="mb-3">
                 <asp:Label Text="Apellido" class="col-sm-2 col-form-label fw-bold" runat="server" />
-                <asp:TextBox CssClass="form-control" REQUIRED ClientIDMode="Static" runat="server" ID="txtApellido"></asp:TextBox>
+                <asp:TextBox CssClass="form-control" ClientIDMode="Static" runat="server" ID="txtApellido"></asp:TextBox>
+                <asp:RequiredFieldValidator CssClass="validacion" ErrorMessage="El apellido es requerido" ControlToValidate="txtApellido" runat="server" />
             </div>
         </div>
        

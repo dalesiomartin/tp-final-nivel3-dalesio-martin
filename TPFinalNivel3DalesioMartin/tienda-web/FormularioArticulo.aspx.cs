@@ -96,7 +96,7 @@ namespace tienda_web
                 {
                     Session.Add("Error", "Faltan campos por completar");
                     Response.Redirect("Error.aspx", false);
-                }
+                } 
                 Articulo nuevo = new Articulo();
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 nuevo.Codigo = txtCodArticulo.Text;
@@ -161,5 +161,25 @@ namespace tienda_web
                 Response.Redirect("Error.aspx");
             }
         }
+
+        //TRABAJAR PARA ELIMINAR LOS FAVORITOS O CON ELIMINAR
+        //protected void btnInactivar_Click(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        PokemonNegocio negocio = new PokemonNegocio();
+        //        Pokemon seleccionado = (Pokemon)Session["pokeSeleccionado"];
+
+        //        negocio.eliminarLogico(seleccionado.Id, !seleccionado.Activo);
+        //        Response.Redirect("PokemonsLista.aspx");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Session.Add("error", ex.ToString());
+        //        Response.Redirect("Error.aspx");
+        //    }
+        //}
+
+
     }
 }

@@ -18,7 +18,7 @@ namespace tienda_web
 
                 if (Session["email"] != null)
                 {
-                    txtUser.Text = Session["email"].ToString();
+                    txtEmail.Text = Session["email"].ToString();
 
                 }
             }
@@ -31,16 +31,21 @@ namespace tienda_web
 
             try
             {
-                
-                trainee.Email = txtUser.Text;
+                if (Validacion.validaTextoVacio(txtEmail) || Validacion.validaTextoVacio(txtPass))
+                {
+                    Session.Add("error", "Debes completar ambos campos...");
+                    Response.Redirect("Error.aspx");
+                }
+
+                trainee.Email = txtEmail.Text;
                 trainee.Pass = txtPass.Text;
 
-                if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPass.Text))
+                if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPass.Text))
                 {
 
-                    if (!string.IsNullOrEmpty(txtUser.Text))
+                    if (!string.IsNullOrEmpty(txtEmail.Text))
                     {
-                        Session["email"] = txtUser.Text;
+                        Session["email"] = txtEmail.Text;
                     }
                     Session.Add("error", "Debes completar ambos campos");
                     Response.Redirect("Error.aspx");
@@ -54,7 +59,7 @@ namespace tienda_web
 
                 else
                 {
-                    Session["email"] = txtUser.Text; // Guardar el email si hay un error de login
+                    Session["email"] = txtEmail.Text; // Guardar el email si hay un error de login
                     Session.Add("error", "User o pass incorrectos");
                     Response.Redirect("Error.aspx");
                 }

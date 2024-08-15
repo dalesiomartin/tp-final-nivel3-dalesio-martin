@@ -21,6 +21,10 @@ namespace tienda_web
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid)
+                    return; //con esto valida las expresiones que le pido que cumpla para registrarse, sino estuviera pasaria de largo sin validar
+
                 Trainee user = new Trainee();
                 TraineeNegocio negocio = new TraineeNegocio();
                 user.Email = txtEmail.Text;

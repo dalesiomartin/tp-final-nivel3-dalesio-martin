@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
 namespace tienda_web
 {
@@ -55,6 +56,14 @@ namespace tienda_web
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
+            //SEGUIR TRABAJANDOLO
+            //if ((string.IsNullOrEmpty(ddlCampo.SelectedItem.ToString()) || string.IsNullOrEmpty(ddlCriterio.SelectedItem.ToString())
+            //    || string.IsNullOrEmpty(txtFiltroAvanzado.Text)))
+            //{
+            //    Session.Add("Error", "Faltan campos por completar");
+            //}
+            
+
             try
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
@@ -87,31 +96,28 @@ namespace tienda_web
             dgvArticulos.DataBind();
         }
 
+
+
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
+                txtFiltro.Text = string.Empty;
 
-                //dgvArticulos.DataSource = negocio.LimpiarFiltros();
-                //ddlCampo.SelectedIndex = -1;
-                //ddlCriterio.SelectedIndex = -1;
-                //txtFiltroAvanzado.Text = string.Empty;
-                //dgvArticulos.DataBind();
+                ddlCampo.ClearSelection();
 
-                //SEGUIR TRABAJANDOLO
-                // Limpiar la selección del campo
-                //ddlCampo.ClearSelection();
+                // Limpiar los criterios del DropDownList
+                ddlCriterio.Items.Clear();
 
-                //// Limpiar los criterios del DropDownList
-                //ddlCriterio.Items.Clear();
-
-                //// Limpiar el texto del filtro avanzado
-                //txtFiltroAvanzado.Text = string.Empty;
-
-                //// Opcional: Deshabilitar el campo de texto del filtro avanzado
+                // Limpiar el texto del filtro avanzado
+                txtFiltroAvanzado.Text = string.Empty;
+                // Opcional: Deshabilitar el campo de texto del filtro avanzado
                 //txtFiltroAvanzado.Enabled = false;
 
+                dgvArticulos.DataSource = negocio.listar();
+
+                dgvArticulos.DataBind();
 
 
             }
@@ -133,29 +139,29 @@ namespace tienda_web
 
             List<Marca> listaMarcas = marcaNeg.listar();
             List<Categoria> listaCategorias = cateNeg.listar();
-
-
+            
 
             ddlCriterio.Items.Clear();
+
+            txtFiltroAvanzado.Text = string.Empty;
+
+
             if (ddlCampo.SelectedItem.ToString() == "Nombre")
             {
                 ddlCriterio.Items.Add("Contiene");
                 ddlCriterio.Items.Add("Empieza con");
                 ddlCriterio.Items.Add("Termina con");
+              //  txtFiltroAvanzado.Text = string.Empty;
                 txtFiltroAvanzado.Enabled = true;
             }
             else if (ddlCampo.SelectedItem.ToString() == "Marca")
             {
+
                 ddlCriterio.DataSource = listaMarcas;
 
-                // Especificar el campo que se mostrará en el DropDownList
-                ddlCriterio.DataTextField = "Descripcion"; // Mostrar la propiedad "Descripcion"
-
-                // Especificar el campo que se usará como valor
+                ddlCriterio.DataTextField = "Descripcion"; // Mostrar la propiedad "Descripcion". Es el campo del DropDownList
                 ddlCriterio.DataValueField = "Id"; // Usar la propiedad "Id" como valor
-
-                // Enlazar los datos al control para que se reflejen en la interfaz de usuario
-                ddlCriterio.DataBind();
+                ddlCriterio.DataBind(); // Enlazar los datos al control para que se reflejen en la interfaz de usuario
                 txtFiltroAvanzado.Enabled = false;
 
 
@@ -176,17 +182,34 @@ namespace tienda_web
                 ddlCriterio.Items.Add("Igual a");
                 ddlCriterio.Items.Add("Mayor a");
                 ddlCriterio.Items.Add("Menor a");
+               // txtFiltroAvanzado.Text = string.Empty;
                 txtFiltroAvanzado.Enabled = true;
             }
         }
 
         protected void ddlCriterio_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Asignar el Id seleccionado en el DropDownList al campo de texto
-            if (ddlCriterio.SelectedValue != null)
+
+            //controlo el AutoPostBack para que me traiga solo el id en Marca y Categoria
+            string selectedValue = ddlCampo.SelectedItem.ToString();
+            //txtFiltroAvanzado.Text = string.Empty;
+
+            if (selectedValue == "Marca" || selectedValue == "Categoria")
             {
-                txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
+                ddlCriterio.AutoPostBack = true;
+                if (ddlCriterio.SelectedValue != null)
+                {
+                    txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
+                }
+
             }
+            else
+            {
+                ddlCriterio.AutoPostBack = false;
+               
+            }
+            
+
         }
     }
 }

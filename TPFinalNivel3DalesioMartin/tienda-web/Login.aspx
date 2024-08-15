@@ -23,7 +23,7 @@
                         <div class="col-12">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="user-label" style="font-size: larger; font-weight: bold;">👤</span>
-                                <asp:TextBox runat="server" ID="txtUser" CssClass="form-control" placeholder="Correo electrónico" />
+                                <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" placeholder="Correo electrónico" />
                             </div>
 
                             <div class="input-group mb-3">

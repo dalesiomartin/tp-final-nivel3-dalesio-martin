@@ -1,5 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Registro.aspx.cs" Inherits="tienda_web.Registro" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+  <style>
+      .validacion {
+          color: red;
+          font-size: 15px;
+      }
+  </style>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -22,15 +28,16 @@
                         
                         <div class="mb-3">
                             <asp:Label Text="Correo electrónico" runat="server" CssClass="text-white" Font-Size="Larger" Font-Bold="true" />
-                            <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control textbox-custom" />
-                            <asp:RequiredFieldValidator CssClass="validacion text-white" ErrorMessage="El email es requerido" ControlToValidate="txtEmail" runat="server" />
-                            <asp:RegularExpressionValidator CssClass="validacion text-white" ErrorMessage="Formato de email incorrecto" ValidationExpression="^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$" ControlToValidate="txtEmail" runat="server" />
+                            <asp:TextBox runat="server" ID="txtEmail" CssClass="form-control" />
+                            <asp:RequiredFieldValidator ErrorMessage="El mail es requerido." CssClass="validacion" ControlToValidate="txtEmail" runat="server" />
+                            <asp:RegularExpressionValidator ErrorMessage="Formato de email incorrecto." CssClass="validacion" ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" ControlToValidate="txtEmail" runat="server" />
                             <asp:Label ID="lbError" runat="server" ForeColor="Red" Visible="false"></asp:Label>
                         </div>
                        
                         <div class="mb-3">
                             <asp:Label Text="Contraseña" runat="server" CssClass="text-white" Font-Size="Larger" Font-Bold="true" />
                             <asp:TextBox runat="server" ID="txtPass" CssClass="form-control textbox-custom" />
+                            <asp:RequiredFieldValidator ErrorMessage="La contraseña es requerida" CssClass="validacion" ControlToValidate="txtPass" runat="server" />
                         </div>
 
                         <div class="mb-2">
