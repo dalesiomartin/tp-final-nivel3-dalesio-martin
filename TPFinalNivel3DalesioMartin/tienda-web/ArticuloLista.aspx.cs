@@ -35,7 +35,6 @@ namespace tienda_web
 
             pnlFiltroAvanzado.Visible = FiltroAvanzado;
 
-
         }
 
         protected void dgvArticulos_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -50,34 +49,6 @@ namespace tienda_web
         {
             string id = dgvArticulos.SelectedDataKey.Value.ToString();
             Response.Redirect("FormularioArticulo.aspx?id=" + id);
-        }
-
-
-
-        protected void btnBuscar_Click(object sender, EventArgs e)
-        {
-            //SEGUIR TRABAJANDOLO
-            //if ((string.IsNullOrEmpty(ddlCampo.SelectedItem.ToString()) || string.IsNullOrEmpty(ddlCriterio.SelectedItem.ToString())
-            //    || string.IsNullOrEmpty(txtFiltroAvanzado.Text)))
-            //{
-            //    Session.Add("Error", "Faltan campos por completar");
-            //}
-            
-
-            try
-            {
-                ArticuloNegocio negocio = new ArticuloNegocio();
-                dgvArticulos.DataSource = negocio.filtrar(
-                    ddlCampo.SelectedItem.ToString(),
-                    ddlCriterio.SelectedItem.ToString(),
-                    txtFiltroAvanzado.Text);
-                dgvArticulos.DataBind();
-            }
-            catch (Exception ex)
-            {
-                Session.Add("Error", ex);
-                throw;
-            }
         }
 
 
@@ -98,27 +69,137 @@ namespace tienda_web
 
 
 
+        protected void ddlCampo_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            CategoriaNegocio cateNeg = new CategoriaNegocio();
+            MarcaNegocio marcaNeg = new MarcaNegocio();
+
+            List<Marca> listaMarcas = marcaNeg.listar();
+            List<Categoria> listaCategorias = cateNeg.listar();
+
+
+            ddlCriterio.Items.Clear();
+            txtFiltroAvanzado.Text = string.Empty;
+
+
+            string campoSeleccionado = ddlCampo.SelectedItem.ToString();
+
+            switch (campoSeleccionado)
+            {
+
+                case "Precio":
+                    ddlCriterio.Items.Add("Igual a");
+                    ddlCriterio.Items.Add("Mayor a");
+                    ddlCriterio.Items.Add("Menor a");
+                    txtFiltroAvanzado.Enabled = true;
+                    break;
+
+                case "Nombre":
+                    ddlCriterio.Items.Add("Contiene");
+                    ddlCriterio.Items.Add("Empieza con");
+                    ddlCriterio.Items.Add("Termina con");
+                    txtFiltroAvanzado.Enabled = true;
+                    break;
+
+                case "Marca":
+                    ddlCriterio.DataSource = listaMarcas;
+                    ddlCriterio.DataTextField = "Descripcion";
+                    ddlCriterio.DataValueField = "Id";
+                    ddlCriterio.DataBind();
+                    txtFiltroAvanzado.Enabled = false;
+
+                    if (ddlCriterio.Items.Count > 0)
+                    {
+                        txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
+                    }
+
+                    break;
+
+                case "Categoria":
+                    ddlCriterio.DataSource = listaCategorias;
+                    ddlCriterio.DataTextField = "Descripcion";
+                    ddlCriterio.DataValueField = "Id";
+                    ddlCriterio.DataBind();
+                    txtFiltroAvanzado.Enabled = false;
+
+                    if (ddlCriterio.Items.Count > 0)
+                    {
+                        txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
+                    }
+                    break;
+
+
+            }
+        }
+
+        protected void ddlCriterio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            //controlo el AutoPostBack para que me traiga solo el id en Marca y Categoria. para que sea dinámico
+            string selectedValue = ddlCampo.SelectedItem.ToString();
+
+            if (selectedValue == "Marca" || selectedValue == "Categoria")
+            {
+                txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
+            }
+            else
+            {
+                txtFiltroAvanzado.Text = string.Empty;
+            }
+
+
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            // Validar que los campos ddlCampo, ddlCriterio y txtFiltroAvanzado que no estén vacíos
+            if (string.IsNullOrEmpty(ddlCampo.SelectedValue) ||
+                string.IsNullOrEmpty(ddlCriterio.SelectedValue) ||
+                string.IsNullOrEmpty(txtFiltroAvanzado.Text))
+            {
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Llenar todos los campos');", true);
+                return;
+            }
+
+            // Campo Precio: Lea solo numeros
+            if (ddlCampo.SelectedItem.Text == "Precio")
+            {
+                decimal filtroNumerico;
+                if (!decimal.TryParse(txtFiltroAvanzado.Text, out filtroNumerico))
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('El campo Precio debe contener solo números.');", true);
+                    return;
+                }
+            }
+
+
+            try
+            {
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                dgvArticulos.DataSource = negocio.filtrar(
+                    ddlCampo.SelectedItem.ToString(),
+                    ddlCriterio.SelectedItem.ToString(),
+                    txtFiltroAvanzado.Text);
+                dgvArticulos.DataBind();
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error", ex);
+                throw ex;
+            }
+        }
+
         protected void btnLimpiar_Click(object sender, EventArgs e)
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             try
             {
                 txtFiltro.Text = string.Empty;
-
                 ddlCampo.ClearSelection();
-
-                // Limpiar los criterios del DropDownList
-                ddlCriterio.Items.Clear();
-
-                // Limpiar el texto del filtro avanzado
-                txtFiltroAvanzado.Text = string.Empty;
-                // Opcional: Deshabilitar el campo de texto del filtro avanzado
-                //txtFiltroAvanzado.Enabled = false;
-
+                ddlCriterio.Items.Clear();// Limpiar los criterios del DropDownList              
+                txtFiltroAvanzado.Text = string.Empty;// Limpiar el texto del filtro avanzado
                 dgvArticulos.DataSource = negocio.listar();
-
                 dgvArticulos.DataBind();
-
 
             }
             catch (Exception ex)
@@ -129,88 +210,7 @@ namespace tienda_web
             }
         }
 
-        protected void ddlCampo_SelectedIndexChanged1(object sender, EventArgs e)
-        {
-            CategoriaNegocio cateNeg = new CategoriaNegocio();
-            MarcaNegocio marcaNeg = new MarcaNegocio();
 
-
-            //Session["listaMarca"] = marcaNeg.listar();
-
-            List<Marca> listaMarcas = marcaNeg.listar();
-            List<Categoria> listaCategorias = cateNeg.listar();
-            
-
-            ddlCriterio.Items.Clear();
-
-            txtFiltroAvanzado.Text = string.Empty;
-
-
-            if (ddlCampo.SelectedItem.ToString() == "Nombre")
-            {
-                ddlCriterio.Items.Add("Contiene");
-                ddlCriterio.Items.Add("Empieza con");
-                ddlCriterio.Items.Add("Termina con");
-              //  txtFiltroAvanzado.Text = string.Empty;
-                txtFiltroAvanzado.Enabled = true;
-            }
-            else if (ddlCampo.SelectedItem.ToString() == "Marca")
-            {
-
-                ddlCriterio.DataSource = listaMarcas;
-
-                ddlCriterio.DataTextField = "Descripcion"; // Mostrar la propiedad "Descripcion". Es el campo del DropDownList
-                ddlCriterio.DataValueField = "Id"; // Usar la propiedad "Id" como valor
-                ddlCriterio.DataBind(); // Enlazar los datos al control para que se reflejen en la interfaz de usuario
-                txtFiltroAvanzado.Enabled = false;
-
-
-            }
-            else if (ddlCampo.SelectedItem.ToString() == "Categoria")
-            {
-                ddlCriterio.DataSource = listaCategorias;
-                ddlCriterio.DataTextField = "Descripcion";
-                ddlCriterio.DataValueField = "Id";
-                ddlCriterio.DataBind();
-
-                txtFiltroAvanzado.DataBind();
-                txtFiltroAvanzado.Enabled = false;
-
-            }
-            else if (ddlCampo.SelectedItem.ToString() == "Precio")
-            {
-                ddlCriterio.Items.Add("Igual a");
-                ddlCriterio.Items.Add("Mayor a");
-                ddlCriterio.Items.Add("Menor a");
-               // txtFiltroAvanzado.Text = string.Empty;
-                txtFiltroAvanzado.Enabled = true;
-            }
-        }
-
-        protected void ddlCriterio_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            //controlo el AutoPostBack para que me traiga solo el id en Marca y Categoria
-            string selectedValue = ddlCampo.SelectedItem.ToString();
-            //txtFiltroAvanzado.Text = string.Empty;
-
-            if (selectedValue == "Marca" || selectedValue == "Categoria")
-            {
-                ddlCriterio.AutoPostBack = true;
-                if (ddlCriterio.SelectedValue != null)
-                {
-                    txtFiltroAvanzado.Text = ddlCriterio.SelectedValue;
-                }
-
-            }
-            else
-            {
-                ddlCriterio.AutoPostBack = false;
-               
-            }
-            
-
-        }
     }
 }
 

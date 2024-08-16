@@ -3,7 +3,7 @@
     <style>
         .validacion{
             color: red;
-            font-size: 10px;
+            font-size: 15px;
         }
     </style>
     <script>
@@ -39,7 +39,7 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <asp:Label Text="Email" class="col-sm-2 col-form-label fw-bold" runat="server" />
-                <asp:TextBox CssClass="form-control-plaintext" runat="server" ID="txtEmail"  ReadOnly="true"></asp:TextBox>
+                <asp:TextBox CssClass="form-control" runat="server" ID="txtEmail"  ReadOnly="true"></asp:TextBox>
                 
             </div>
             <div class="mb-3">
