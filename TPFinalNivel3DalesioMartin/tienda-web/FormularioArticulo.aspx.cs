@@ -49,7 +49,7 @@ namespace tienda_web
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 if (id != "" && !IsPostBack)
                 {
-                    
+
 
                     ArticuloNegocio negocio = new ArticuloNegocio();
 
@@ -62,7 +62,7 @@ namespace tienda_web
                     txtId.Text = id;
                     txtCodArticulo.Text = seleccionado.Codigo;
                     txtNombre.Text = seleccionado.Nombre;
-                    txtPrecio.Text = seleccionado.Precio.ToString("c");
+                    txtPrecio.Text = seleccionado.Precio.ToString();
                     txtDescripcion.Text = seleccionado.Descripcion;
                     txtImagenUrl.Text = seleccionado.ImagenUrl;
 
@@ -72,9 +72,6 @@ namespace tienda_web
 
                     btnEliminar.Visible = true;
 
-                    //configurar acciones
-                    //if (!seleccionado.Activo)
-                    //    btnInactivar.Text = "Reactivar";
                 }
 
             }
@@ -85,7 +82,8 @@ namespace tienda_web
             }
         }
 
-        protected void btnAceptar_Click(object sender, EventArgs e)
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
         {
             Page.Validate();
             if (!Page.IsValid)
@@ -96,13 +94,16 @@ namespace tienda_web
                 {
                     Session.Add("Error", "Faltan campos por completar");
                     Response.Redirect("Error.aspx", false);
-                } 
+                }
                 Articulo nuevo = new Articulo();
                 ArticuloNegocio negocio = new ArticuloNegocio();
+
                 nuevo.Codigo = txtCodArticulo.Text;
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Descripcion = txtDescripcion.Text;
+
                 nuevo.Precio = decimal.Parse(txtPrecio.Text);
+
                 nuevo.ImagenUrl = txtImagenUrl.Text;
 
                 nuevo.Marca = new Marca();
@@ -147,7 +148,7 @@ namespace tienda_web
         protected void btnConfirmaEliminar_Click(object sender, EventArgs e)
         {
             try
-            {   
+            {
                 if (chkConfirmaEliminacion.Checked)
                 {
                     ArticuloNegocio negocio = new ArticuloNegocio();
@@ -161,24 +162,6 @@ namespace tienda_web
                 Response.Redirect("Error.aspx");
             }
         }
-
-        //TRABAJAR PARA ELIMINAR LOS FAVORITOS O CON ELIMINAR
-        //protected void btnInactivar_Click(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        PokemonNegocio negocio = new PokemonNegocio();
-        //        Pokemon seleccionado = (Pokemon)Session["pokeSeleccionado"];
-
-        //        negocio.eliminarLogico(seleccionado.Id, !seleccionado.Activo);
-        //        Response.Redirect("PokemonsLista.aspx");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Session.Add("error", ex.ToString());
-        //        Response.Redirect("Error.aspx");
-        //    }
-        //}
 
 
     }

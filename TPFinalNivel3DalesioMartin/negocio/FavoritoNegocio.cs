@@ -66,5 +66,60 @@ namespace negocio
             }
         }
 
+        public void EliminarFav(Favorito fav)
+        {
+            ConexionDatos datos = new ConexionDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM FAVORITOS WHERE IdUser = @IdUser AND IdArticulo = @IdArticulo");
+                datos.setearParametros("@IdUser", fav.IdUser);
+                datos.setearParametros("@IdArticulo", fav.IdArticulo);
+
+                datos.ejecutarAccion(); // No se espera un valor de retorno para un DELETE
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores detallado
+                throw new ApplicationException("Error al eliminar favorito.", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
+
+        public bool ExisteFavorito(int idUser, int idArticulo)
+        {
+            ConexionDatos datos = new ConexionDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM FAVORITOS WHERE IdUser = @IdUser AND IdArticulo = @IdArticulo");
+                datos.setearParametros("@IdUser", idUser);
+                datos.setearParametros("@IdArticulo", idArticulo);
+
+                datos.ejecutarLectura();
+
+                if (datos.lectorData.Read())
+                {
+                    int count = (int)datos.lectorData[0];
+                    return count > 0;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+
+
     }
 }

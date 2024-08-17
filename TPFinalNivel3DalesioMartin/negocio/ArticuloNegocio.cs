@@ -288,34 +288,7 @@ namespace negocio
             }
 
 
-        }
-
-        //public List<Articulo> LimpiarFiltros()
-        //{
-        //    List<Articulo> lista = new List<Articulo>();
-        //    ConexionDatos datos = new ConexionDatos();
-
-
-        //    try
-        //    {
-
-        //        lista = listar();
-        //    }
-
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //    finally
-        //    {
-        //        datos.cerrarConexion();
-        //    }
-
-        //    return lista;
-
-        //}
-       
+        }     
 
     }
 }

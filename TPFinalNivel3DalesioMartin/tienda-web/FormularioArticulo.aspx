@@ -28,22 +28,23 @@
                 <label for="txtPrecio" class="form-label">* Precio: </label>
                 <asp:TextBox runat="server" ID="txtPrecio" CssClass="form-control" />
                 <asp:RequiredFieldValidator ErrorMessage="El Precio es requerido." ControlToValidate="txtPrecio" ForeColor="DarkRed" runat="server" />
-                <asp:RangeValidator ErrorMessage="Ingresar un formato valido para precio" ControlToValidate="txtPrecio" Type="Double" MinimumValue="0" MaximumValue="70000000" runat="server" />
+                <asp:RangeValidator ErrorMessage="Ingresar un formato precio, use coma (,) como separador decimal" ControlToValidate="txtPrecio" Type="Double" MinimumValue="0" MaximumValue="70000000" runat="server" />
             </div>
+
 
             <div class="mb-3">
                 <label for="ddlMarca" class="form-label">* Marca: </label>
                 <asp:DropDownList runat="server" ID="ddlMarca" CssClass="form-control" />
-                   <asp:RequiredFieldValidator ErrorMessage="La Marca es requerida." ControlToValidate="ddlMarca" ForeColor="DarkRed" runat="server" />
+                <asp:RequiredFieldValidator ErrorMessage="La Marca es requerida." ControlToValidate="ddlMarca" ForeColor="DarkRed" runat="server" />
             </div>
             <div class="mb-3">
                 <label for="ddlCategoria" class="form-label">* Categoria: </label>
                 <asp:DropDownList runat="server" ID="ddlCategoria" CssClass="form-control" />
-                  <asp:RequiredFieldValidator ErrorMessage="La Categoria es requerido." ControlToValidate="ddlCategoria" ForeColor="DarkRed" runat="server" />
+                <asp:RequiredFieldValidator ErrorMessage="La Categoria es requerido." ControlToValidate="ddlCategoria" ForeColor="DarkRed" runat="server" />
             </div>
 
             <div class="mb-3">
-                <asp:Button Text="Guardar" ID="btnAceptar" CssClass="btn btn-primary" OnClick="btnAceptar_Click" runat="server" />
+                <asp:Button Text="Guardar" ID="btnGuardar" CssClass="btn btn-primary" OnClick="btnGuardar_Click" runat="server" />
                 <a href="ArticuloLista.aspx">Cancelar</a>
             </div>
         </div>
@@ -69,7 +70,7 @@
     <%-- --------------otra Fila-------------------%>
     <div class="row">
         <div class="col-6">
-         
+
             <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                 <ContentTemplate>
 
@@ -77,19 +78,17 @@
                         <asp:Button Text="Eliminar" ID="btnEliminar" OnClick="btnEliminar_Click" CssClass="btn btn-danger" runat="server" />
                     </div>
 
-                             <%if (ConfirmaEliminacion)
-                             { %>
-                            <div class="mb-3">
-                                 <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
-                                    <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-outline-danger" runat="server" />
-                             </div>
+                    <%if (ConfirmaEliminacion)
+                        { %>
+                    <div class="mb-3">
+                        <asp:CheckBox Text="Confirmar Eliminacion" ID="chkConfirmaEliminacion" runat="server" />
+                        <asp:Button Text="Eliminar" ID="btnConfirmaEliminar" OnClick="btnConfirmaEliminar_Click" CssClass="btn btn-outline-danger" runat="server" />
+                    </div>
 
-                             <%} %>
-
-                   
+                    <%} %>
                 </ContentTemplate>
             </asp:UpdatePanel>
-           
+
 
         </div>
     </div>

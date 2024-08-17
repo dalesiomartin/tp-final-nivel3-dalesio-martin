@@ -88,9 +88,9 @@ namespace tienda_web
             {
 
                 case "Precio":
-                    ddlCriterio.Items.Add("Igual a");
                     ddlCriterio.Items.Add("Mayor a");
                     ddlCriterio.Items.Add("Menor a");
+                    ddlCriterio.Items.Add("Igual a");
                     txtFiltroAvanzado.Enabled = true;
                     break;
 
@@ -161,9 +161,12 @@ namespace tienda_web
                 return;
             }
 
-            // Campo Precio: Lea solo numeros
+            // Campo Precio: Lea solo números y validar que el separador decimal sea un punto
             if (ddlCampo.SelectedItem.Text == "Precio")
             {
+                // Reemplazar coma con punto
+                txtFiltroAvanzado.Text = txtFiltroAvanzado.Text.Replace(",", ".");
+
                 decimal filtroNumerico;
                 if (!decimal.TryParse(txtFiltroAvanzado.Text, out filtroNumerico))
                 {
@@ -184,8 +187,8 @@ namespace tienda_web
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
-                throw ex;
+                Session.Add("Error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
 

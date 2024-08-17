@@ -45,5 +45,48 @@ namespace tienda_web
                 }
             }
         }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Trainee user = (Trainee)Session["trainee"];
+                FavoritoNegocio favoritoNegocio = new FavoritoNegocio();
+
+                Button btn = (Button)sender; // Obtener el botón que fue clickeado
+
+                string artIdStr = btn.CommandArgument;// Obtener el ID del artículo desde el CommandArgument del botón
+
+                if (int.TryParse(artIdStr, out int idArticulo))
+                {
+                    Favorito fav = new Favorito
+                    {
+                        IdUser = user.Id,
+                        IdArticulo = idArticulo
+                    };
+
+                    favoritoNegocio.EliminarFav(fav);
+
+                    Response.Redirect("Favoritos.aspx", false);
+                }
+                else
+                {
+                    throw new ApplicationException("ID del artículo no válido.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejar errores y redirigir a la página de error
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
+            }
+
+
+
+        }
+
+
+
+
     }
 }

@@ -26,7 +26,7 @@ namespace tienda_web
                         txtApellido.Text = user.Apellido;
                         if (!string.IsNullOrEmpty(user.UrlImagenPerfil))
                             imgAvatar.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil;
-                            
+
 
                     }
                 }
@@ -49,7 +49,8 @@ namespace tienda_web
                 Trainee user = (Trainee)Session["trainee"];
                 TraineeNegocio negocio = new TraineeNegocio();
 
-                if (txtImagen.PostedFile.FileName != "") //escribir imagen solo si se cargo algo, sino sigue como estaba la db (con imagen o sin nada, si no hacia esta validacion me cargaba cualquier cosa, me cambiaba lo que ya tenia)
+                //Escribir img si se cargó algo
+                if (txtImagen.PostedFile.FileName != "")
                 {
                     string ruta = Server.MapPath("./Imagenes/perfil/"); //capturo la ruta donde guardare las imagenes
                     txtImagen.PostedFile.SaveAs(ruta + "perfil-" + user.Id + ".jpg"); //en la ruta guardamos la imagen seleccionada con el id
@@ -78,7 +79,7 @@ namespace tienda_web
                     }
                 }
 
-               
+
             }
             catch (Exception ex)
             {

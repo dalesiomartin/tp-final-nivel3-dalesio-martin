@@ -16,7 +16,7 @@ namespace tienda_web
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
             ListaArticulo = negocio.listar();
-            
+
             if (!IsPostBack)
             {
                 repRepetidor.DataSource = ListaArticulo;
@@ -25,7 +25,7 @@ namespace tienda_web
         }
 
         protected void btnFavoritos_Click(object sender, EventArgs e)
-        { ////VER SI PUEDO AL AGREGAR A FAVORITO, CAMBIAR EL COLOR DEL CORAZON 🤍 ❤️
+        {
             try
             {
                 Trainee user = (Trainee)Session["trainee"];
@@ -48,11 +48,44 @@ namespace tienda_web
 
                     fav.IdArticulo = idArticulo;
 
-                    int idFavorito = favoritoNegocio.InsertarNuevo(fav);
-                    fav.Id = idFavorito;
 
-                    Response.Redirect("Favoritos.aspx", false);
+                    // Verificar si el artículo ya está en favoritos
+                    bool selecFavoritos = favoritoNegocio.ExisteFavorito(fav.IdUser, fav.IdArticulo);
+
+                    if (selecFavoritos)
+                    {
+                        //ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('Este producto ya está en tu lista de favoritos.');", true);
+                        //return;
+                        string script = @"
+                            var alerta = document.getElementById('alerta');
+                            alerta.style.display = 'block';
+                            alerta.style.opacity = '1';
+                            setTimeout(function() {
+                            alerta.style.opacity = '0';
+                            setTimeout(function() {
+                            alerta.style.display = 'none';
+                             }, 600); // Tiempo para que la alerta desaparezca
+                             }, 3000); // Tiempo que la alerta está visible";
+                        ScriptManager.RegisterStartupScript(this, this.GetType(), "mostrarAlerta", script, true);
+                        return;
+
+                    }
+                    else
+                    {
+                        // Si no está en favoritos, lo agrega
+                        int idFavorito = favoritoNegocio.InsertarNuevo(fav);
+                        fav.Id = idFavorito;
+
+                        //// Opcional: Cambiar el color del corazón
+                        //((Button)sender).CssClass = "btn btn-danger"; // Cambia el color del botón al rojo
+
+                        Response.Redirect("Favoritos.aspx", false);
+
+                    }
+
+
                 }
+
                 else
                 {
                     // Manejar el caso donde CommandArgument no es un entero válido
