@@ -27,7 +27,7 @@ namespace tienda_web
                         Trainee user = (Trainee)Session["trainee"];
                         lbUser.Text = user.Email;
                         if (!string.IsNullOrEmpty(user.UrlImagenPerfil))
-                            imgAvatar.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil;
+                            imgAvatar.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil + "?t=" + DateTime.Now.Ticks; // Añadido parámetro de caché
                     }
                 }
 

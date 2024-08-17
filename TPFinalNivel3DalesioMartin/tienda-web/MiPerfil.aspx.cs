@@ -71,7 +71,7 @@ namespace tienda_web
                     if (img != null)
                     {
                         // Añadir un parámetro aleatorio para evitar caché
-                        img.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil;
+                        img.ImageUrl = "~/Imagenes/perfil/" + user.UrlImagenPerfil + "?t=" + DateTime.Now.Ticks;
                     }
                     else
                     {
