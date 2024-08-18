@@ -28,7 +28,7 @@
                 <label for="txtPrecio" class="form-label">* Precio: </label>
                 <asp:TextBox runat="server" ID="txtPrecio" CssClass="form-control" />
                 <asp:RequiredFieldValidator ErrorMessage="El Precio es requerido." ControlToValidate="txtPrecio" ForeColor="DarkRed" runat="server" />
-                <asp:RangeValidator ErrorMessage="Ingresar un formato precio, use coma (,) como separador decimal" ControlToValidate="txtPrecio" Type="Double" MinimumValue="0" MaximumValue="70000000" runat="server" />
+<%--                <asp:RangeValidator ErrorMessage="Ingresar un formato precio, use coma (,) como separador decimal" ControlToValidate="txtPrecio" Type="Double" MinimumValue="0" MaximumValue="70000000" runat="server" />--%>
             </div>
 
 

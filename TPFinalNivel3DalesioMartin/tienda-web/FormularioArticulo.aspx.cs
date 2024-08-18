@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -62,7 +63,9 @@ namespace tienda_web
                     txtId.Text = id;
                     txtCodArticulo.Text = seleccionado.Codigo;
                     txtNombre.Text = seleccionado.Nombre;
+
                     txtPrecio.Text = seleccionado.Precio.ToString();
+
                     txtDescripcion.Text = seleccionado.Descripcion;
                     txtImagenUrl.Text = seleccionado.ImagenUrl;
 
@@ -102,7 +105,19 @@ namespace tienda_web
                 nuevo.Nombre = txtNombre.Text;
                 nuevo.Descripcion = txtDescripcion.Text;
 
-                nuevo.Precio = decimal.Parse(txtPrecio.Text);
+                //nuevo.Precio = decimal.Parse(txtPrecio.Text);
+                string precioTexto = txtPrecio.Text.Replace(",", ".");
+                //nuevo.Precio = decimal.Parse(precioTexto, CultureInfo.InvariantCulture);
+                if (decimal.TryParse(precioTexto, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal precio))
+                { nuevo.Precio = precio; }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, this.GetType(), "alert", "alert('El campo Precio debe contener solo números');", true);
+                    return;
+                }
+
+
+
 
                 nuevo.ImagenUrl = txtImagenUrl.Text;
 
@@ -153,13 +168,13 @@ namespace tienda_web
                 {
                     ArticuloNegocio negocio = new ArticuloNegocio();
                     negocio.eliminar(int.Parse(txtId.Text));
-                    Response.Redirect("ArticuloLista.aspx");
+                    Response.Redirect("ArticuloLista.aspx", false);
                 }
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex.ToString());
-                Response.Redirect("Error.aspx");
+                Response.Redirect("Error.aspx", false);
             }
         }
 
