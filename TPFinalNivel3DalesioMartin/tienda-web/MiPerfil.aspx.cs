@@ -78,7 +78,7 @@ namespace tienda_web
                         throw new Exception("Control imgAvatar no encontrado en la Master Page.");
                     }
                 }
-
+                Response.Redirect("MiPerfil.aspx",false);
 
             }
             catch (Exception ex)
