@@ -18,10 +18,12 @@ namespace accesoDatos
             get { return lector; } 
         
         }
-        
+
+       
+
         public ConexionDatos() 
         {
-            conexion = new SqlConnection("Data Source=DESKTOP-G8FBE6Q\\SQLEXPRESS;Initial Catalog=CATALOGO_WEB_DB;Integrated Security=True");
+            conexion = new SqlConnection(ConfigurationManager.AppSettings["cadenaConexion"]);
             comando = new SqlCommand();
         }
 
