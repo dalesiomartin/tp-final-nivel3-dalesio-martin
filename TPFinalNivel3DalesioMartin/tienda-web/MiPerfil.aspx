@@ -69,7 +69,7 @@
 
     <div class="row">
          <div class="col-md-4">
-             <asp:Button Text="Guardar" CssClass="btn btn-outline-secondary" ID="btnGuardar" runat="server" OnClientClick="return validar()" OnClick="btnGuardar_Click"/>
+             <asp:Button Text="Guardar" CssClass="btn btn-primary" ID="btnGuardar" runat="server" OnClientClick="return validar()" OnClick="btnGuardar_Click"/>
              <a href="Default.aspx" Class=" btn btn-dark">Regresar</a>
          </div>
     </div>
